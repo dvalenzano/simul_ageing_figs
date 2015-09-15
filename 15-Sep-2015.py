@@ -178,6 +178,215 @@ z.write(abcdz)
 z.close()
 
 
+# In the block below I generate the sd progression for the sex-pop evol
+
+# In[100]:
+
+sdcsz = het(sz_c.hetrz_mea_sd)
+sd_red = sdcsz.loop2()
+scz_sd_60k = sd_red[-9]
+
+sd_cs1 = het(s1_c.hetrz_mea_sd)
+sd_red1 = sd_cs1.loop2()
+
+sd_a = ','.join([str(i) for i in sd_red1[0]]).replace(',',',0\n')+',0\n'
+sd_b = ','.join([str(i) for i in sd_red1[2]]).replace(',',',1\n')+',1\n'
+sd_c = ','.join([str(i) for i in sd_red1[5]]).replace(',',',3\n')+',3\n'
+sd_d = ','.join([str(i) for i in sd_red1[11]]).replace(',',',6\n')+',6\n'
+sd_z = ','.join([str(i) for i in scz_sd_60k]).replace(',',',z\n')+',z\n'
+sd_abcdz = 'het,group\n'+sd_a+sd_b+sd_c+sd_d+sd_z
+
+z = open('/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/pop/het-sd.csv', 'w')
+z.write(sd_abcdz)
+z.close()
+
+
+# Here below I generate a figure where I compare - in the sexual model - const vs pop with low and high resources. 
+
+# In[143]:
+
+large_pop_early = '/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/pop/first-run/plot_values_run1.txt'
+large_pop_late = '/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/pop/last-run/plot_values_run1.txt'
+large_const_early = '/Volumes/group_dv/personal/DValenzano/papers/simulation_arXiv/Figure3/first-run/plot_values_run1.txt'
+large_const_late = '/Volumes/group_dv/personal/DValenzano/month-by-month/Jun2015/simul/sex/17-Jun-2015/plot_values_run1.txt'
+
+small_pop_early = '/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/pop/small-popsize/pop-first.txt'
+small_pop_late = '/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/pop/small-popsize/pop-last.txt'
+small_const_early = '/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/pop/small-popsize/const-first.txt'
+small_const_late = '/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/pop/small-popsize/const-last.txt'
+
+
+# In[144]:
+
+lpe = cp(large_pop_early)
+lpl = cp(large_pop_late)
+lce = cp(large_const_early)
+lcl = cp(large_const_late)
+spe = cp(small_pop_early)
+spl = cp(small_pop_late)    
+sce = cp(small_const_early)
+scl = cp(small_const_late)
+
+
+# I need to types of plots: one where I show early and late pop-res oscillations in the small and large populations,  
+# both constant and pop
+
+# In[104]:
+
+# This gives the arrays that enable me to compute Si and Ri values in large and small early and late stages for 
+# "const" and "pop" runs
+
+hlpe = het(lpe.hetrz_mea)
+red_lpe = hlpe.loop2()
+
+hlpl = het(lpl.hetrz_mea)
+red_lpl = hlpl.loop2()
+
+hlce = het(lce.hetrz_mea)
+red_lce = hlce.loop2()
+
+hlcl = het(lcl.hetrz_mea)
+red_lcl = hlcl.loop2()
+
+hspe = het(spe.hetrz_mea)
+red_spe = hspe.loop2()
+
+hspl = het(spl.hetrz_mea)
+red_spl = hspl.loop2()
+
+hsce = het(sce.hetrz_mea)
+red_sce = hsce.loop2()
+
+hscl = het(scl.hetrz_mea)
+red_scl = hscl.loop2()
+
+
+# In[105]:
+
+# This gives the arrays that enable me to compute pop and resources values in large and small early and late 
+# stages for "const" and "pop" runs
+
+lpe_pop = lpe.pop_in
+lpe_res = lpe.res_in
+
+lpl_pop = lpl.pop_in
+lpl_res = lpl.res_in
+
+lce_pop = lce.pop_in
+lce_res = lce.res_in
+
+lcl_pop = lcl.pop_in
+lcl_res = lcl.res_in
+
+spe_pop = spe.pop_in
+spe_res = spe.res_in
+
+spl_pop = spl.pop_in
+spl_res = spl.res_in
+
+sce_pop = sce.pop_in
+sce_res = sce.res_in
+
+scl_pop = scl.pop_in
+scl_res = scl.res_in
+
+
+# First, I do the population-resources plot
+
+# In[132]:
+
+# For large populations - sex-pop:
+lpe_p = lpe_pop[:6000]
+lpe_r = lpe_res[:6000]
+lpl_p = lpl_pop[9000:15000]
+lpl_r = lpl_res[9000:15000]
+lp_time = range(1,6001)+range(54001,60000)
+
+lp_p = ['population']+[str(i) for i in lpe_p]+[str(i) for i in lpl_p]
+lp_r = ['resources']+[str(i) for i in lpe_r]+[str(i) for i in lpl_r]
+lp_t = ['time']+[str(i) for i in lp_time]
+
+lp = [lp_p,lp_r,lp_t]
+lptr = zip(*lp)
+#ltl = [list(i) for i in lt]
+lptr_l = ','.join([','.join(list(i))+'\n' for i in lptr]).replace('\n,','\n')
+
+
+# In[133]:
+
+z = open('/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/pop/large-sex-popres.csv','w')
+z.write(lptr_l)
+z.close()
+
+
+# In[148]:
+
+# For large populations - sex-const:
+lce_p = lce_pop[:6000]
+lce_r = lce_res[:6000]
+lcl_p = lcl_pop[-6000:]
+lcl_r = lcl_res[-6000:]
+lc_time = range(1,6001)+range(54001,60001)
+
+lc_p = ['population']+[str(i) for i in lce_p]+[str(i) for i in lcl_p]
+lc_r = ['resources']+[str(i) for i in lce_r]+[str(i) for i in lcl_r]
+lc_t = ['time']+[str(i) for i in lc_time]
+
+lc = [lc_p,lc_r,lc_t]
+lctr = zip(*lc)
+lctr_l = ','.join([','.join(list(i))+'\n' for i in lctr]).replace('\n,','\n')
+
+z = open('/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/pop/large-sex-constres.csv','w')
+z.write(lctr_l)
+z.close()
+
+
+# In[155]:
+
+# For small populations - sex-pop:
+spe_p = spe_pop[:6000]
+spe_r = spe_res[:6000]
+spl_p = spl_pop[-6000:]
+spl_r = spl_res[-6000:]
+sp_time = range(1,6001)+range(54001,60001)
+
+sp_p = ['population']+[str(i) for i in spe_p]+[str(i) for i in spl_p]
+sp_r = ['resources']+[str(i) for i in spe_r]+[str(i) for i in spl_r]
+sp_t = ['time']+[str(i) for i in sp_time]
+
+sp = [sp_p,sp_r,sp_t]
+sptr = zip(*sp)
+#ltl = [list(i) for i in lt]
+sptr_l = ','.join([','.join(list(i))+'\n' for i in sptr]).replace('\n,','\n')
+
+z = open('/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/pop/small-sex-popres.csv','w')
+z.write(sptr_l)
+z.close()
+
+
+# In[151]:
+
+# For small populations - const-pop:
+sce_p = sce_pop[:6000]
+sce_r = sce_res[:6000]
+scl_p = scl_pop[-6000:]
+scl_r = scl_res[-6000:]
+sc_time = range(1,6001)+range(54001,60001)
+
+sc_p = ['population']+[str(i) for i in sce_p]+[str(i) for i in scl_p]
+sc_r = ['resources']+[str(i) for i in sce_r]+[str(i) for i in scl_r]
+sc_t = ['time']+[str(i) for i in sc_time]
+
+sc = [sc_p,sc_r,sc_t]
+sctr = zip(*sc)
+#ltl = [list(i) for i in lt]
+sctr_l = ','.join([','.join(list(i))+'\n' for i in sctr]).replace('\n,','\n')
+
+z = open('/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/pop/small-sex-constres.csv','w')
+z.write(sctr_l)
+z.close()
+
+
 # In[ ]:
 
 

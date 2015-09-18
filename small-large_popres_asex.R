@@ -47,4 +47,38 @@ plot(llcl_as$time,llcl_as$population, type = 'l', col="blue", lwd = 1, xlab="Sta
 lines(llcl_as$time, llcl_as$resources, col="red", lwd=2)
 dev.off()
 
-#############################
+##################################
+######## 18-Sep-2015 #############
+### ASEX SMALL CONST AND POP #####
+##################################
+
+sp_as <- read.csv("/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/small-sex-popres.csv", header=T)
+sc_as <- read.csv("/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/small-sex-constres.csv", header=T)
+
+pdf("/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/Figure7B1.pdf", width=4, height=3.2)
+mfrow=c(1,1)
+spe_as = sp_as[1:5001,]
+plot(spe_as$time,spe_as$resources, type = 'l', col="red", lwd = 1, xlab="Stage", ylab="N", bty="n", ylim=c(0,6000), pin=c(3,2))
+lines(spe_as$time, spe_as$population, col="blue", lwd=2)
+dev.off()
+
+pdf("/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/Figure7B2.pdf", width=4, height=3.2)
+mfrow=c(1,1)
+spl_as = sp_as[7001:12000,]
+plot(spl_as$time,spl_as$resources, type = 'l', col="red", lwd = 1, xlab="Stage", ylab="N", bty="n", ylim=c(0,6000), pin=c(3,2))
+lines(spl_as$time, spl_as$population, col="blue", lwd=2)
+dev.off()
+
+pdf("/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/Figure7B3.pdf", width=4, height=3.2)
+mfrow=c(1,1)
+sce_as = sc_as[1:5001,]
+plot(sce_as$time,sce_as$population, type = 'l', col="blue", lwd = 1, xlab="Stage", ylab="N", bty="n", ylim=c(0,6000), pin=c(3,2))
+lines(sce_as$time, sce_as$resources, col="red", lwd=2)
+dev.off()
+
+pdf("/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/Figure7B4.pdf", width=4, height=3.2)
+mfrow=c(1,1)
+scl_as = sc_as[7001:12000,]
+plot(scl_as$time,scl_as$population, type = 'l', col="blue", lwd = 1, xlab="Stage", ylab="N", bty="n", ylim=c(0,6000), pin=c(3,2))
+lines(scl_as$time, scl_as$resources, col="red", lwd=2)
+dev.off()

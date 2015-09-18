@@ -73,7 +73,7 @@ dev.off()
 
 ### THIS IS ADDED ON 17-SEP-2015 ### I AM ADDING THE 'JUNK' DNA LEVEL ####
 
-Jnk <- read.csv('/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/Jnk_sex', sep=',', head=T)
+Jnk <- read.csv('/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/Jnk_sex.csv', sep=',', head=T)
 Jnk <- Jnk[1:126,]
 
 ## AS A LINE PLOT ##
@@ -112,3 +112,57 @@ lines(xabcd, Jnk$Jlc, lty=2, lwd=3, col=5)
 abline(v=16, lwd=2, lty=2)
 abline(v=72, lwd=4, lty=1)
 dev.off()
+
+########### ASEX - SMALL, LARGE, VERY LARGE POP #############
+
+bde_as <- read.csv('/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/const-small-large_surv_repr.csv', sep=',', head=T)
+xbde <- c(1:(length(bde_as$group)/3))
+bde_lcs <- subset(bde_as, group == 'lcs')
+bde_scs <- subset(bde_as, group == 'scs')
+bde_llcs <- subset(bde_as, group == 'llcs')
+x2 <- c(1:71, 16:70)
+
+## AS A LINE PLOT ##
+mfrow=c(1,1)
+pdf("/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/Figure7D_pop.pdf", width=4, height=3.2)
+plot(xbde, bde_lcs$surv, ylim = c(0, 1), ylab = "Frequency of 1s / S/R_i", xlab = "Age", type="l", lwd=3, col="gray48", lty=1, xaxt="n", bty="n")
+axis(1, at=1:126, labels=x2, tick=T, lwd.ticks=0)
+lines(xbde, bde_scs$surv, lty=1, lwd=3, col="red")
+lines(xbde, bde_llcs$surv, lty=1, lwd=3, col="blue")
+abline(v=16, lwd=1, lty=2)
+abline(v=72, lwd=2, lty=1)
+dev.off()
+
+# Now I add the junk DNA 
+
+Jnk_as <- read.csv('/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/Jnk_sex-repr_as.csv', sep=',', head=T)
+Jnk_as <- Jnk_as[1:126,]
+
+## AS A LINE PLOT ##
+mfrow=c(1,1)
+pdf("/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/Figure7D_lc.pdf", width=4, height=3.2)
+plot(xbde, bde_lcs$surv, ylim = c(0, 1), ylab = "Frequency of 1s / S/R_i", xlab = "Age", type="l", lwd=3, lty=1, xaxt="n", bty="n")
+axis(1, at=1:126, labels=x2, tick=T, lwd.ticks=0)
+lines(xabcd, Jnk_as$Jlc, lty=2, lwd=3)
+abline(v=16, lwd=1, lty=2)
+abline(v=72, lwd=2, lty=1)
+dev.off()
+
+mfrow=c(1,1)
+pdf("/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/Figure7D_sc.pdf", width=4, height=3.2)
+plot(xbde, bde_scs$surv, ylim = c(0, 1), ylab = "Frequency of 1s / S/R_i", xlab = "Age", type="l", lwd=3, lty=1, xaxt="n", bty="n")
+axis(1, at=1:126, labels=x2, tick=T, lwd.ticks=0)
+lines(xabcd, Jnk_as$Jsc, lty=2, lwd=3)
+abline(v=16, lwd=1, lty=2)
+abline(v=72, lwd=2, lty=1)
+dev.off()
+
+mfrow=c(1,1)
+pdf("/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/Figure7D_llc.pdf", width=4, height=3.2)
+plot(xbde, bde_llcs$surv, ylim = c(0, 1), ylab = "Frequency of 1s / S/R_i", xlab = "Age", type="l", lwd=3, lty=1, xaxt="n", bty="n")
+axis(1, at=1:126, labels=x2, tick=T, lwd.ticks=0)
+lines(xabcd, Jnk_as$Jllc, lty=2, lwd=3)
+abline(v=16, lwd=1, lty=2)
+abline(v=72, lwd=2, lty=1)
+dev.off()
+

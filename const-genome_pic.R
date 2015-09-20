@@ -166,3 +166,53 @@ abline(v=16, lwd=1, lty=2)
 abline(v=72, lwd=2, lty=1)
 dev.off()
 
+########## 20 SEP 2015 ############
+### ASEX POP LARGE AND SMALL ######
+###################################
+
+abcde_as <- read.csv('/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/const-small-large_surv_repr.csv', sep=',', head=T)
+xabcde <- c(1:(length(abcde_as$group)/5))
+abcde_lcs <- subset(abcde_as, group == 'lcs')
+abcde_lps <- subset(abcde_as, group == 'lps')
+abcde_scs <- subset(abcde_as, group == 'scs')
+abcde_sps <- subset(abcde_as, group == 'sps')
+abcde_llcs <- subset(abcde_as, group == 'llcs')
+x2 <- c(1:71, 16:70)
+
+Jnk_as <- read.csv('/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/Jnk_sex-repr_as.csv', sep=',', head=T)
+Jnk_as <- Jnk_as[1:126,]
+
+y.high_c<- rep(max(Jnk_as$Jlc, Jnk_as$Jsc, Jnk_as$Jllc), length(xabcde))
+y.low_c<- rep(min(Jnk_as$Jlc, Jnk_as$Jsc, Jnk_as$Jllc), length(xabcde))
+
+library(grDevices)
+
+mfrow=c(1,1)
+pdf("/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/Figure7D_slllc.pdf", width=4, height=3.2)
+plot(xabcde, abcde_lcs$surv, ylim = c(0, 1), ylab = "Frequency of 1s / S/R_i", xlab = "Age", type="l", lwd=3, lty=1, xaxt="n", bty="n")
+axis(1, at=1:126, labels=x2, tick=T, lwd.ticks=0)
+lines(xabcde, abcde_scs$surv,lty=1, lwd=3, col="red")
+lines(xabcde, abcde_llcs$surv,lty=2, lwd=3)
+#lines(xabcde, Jnk_as$Jsc, lty=1, lwd=3, col="red")
+#lines(xabcde, Jnk_as$Jlc, lty=1, lwd=3)
+abline(v=16, lwd=1, lty=2)
+abline(v=72, lwd=2, lty=1)
+polygon(c(xabcde,rev(xabcde)), c(y.high_c, rev(y.low_c)), border=NA, col=rgb(0.41,0.41,0.41,0.5) )
+dev.off()
+
+y.high_p<- rep(max(Jnk_as$Jlp, Jnk_as$Jsp), length(xabcde))
+y.low_p<- rep(min(Jnk_as$Jlp, Jnk_as$Jsp), length(xabcde))
+
+mfrow=c(1,1)
+pdf("/Volumes/group_dv/personal/DValenzano/month-by-month/Sep2015/simul-paper/asex/Figure7D_slp.pdf", width=4, height=3.2)
+plot(xabcde, abcde_lps$surv, ylim = c(0, 1), ylab = "Frequency of 1s / S/R_i", xlab = "Age", type="l", lwd=3, lty=1, xaxt="n", bty="n")
+axis(1, at=1:126, labels=x2, tick=T, lwd.ticks=0)
+lines(xabcde, abcde_sps$surv,lty=1, lwd=3, col="red")
+#lines(xabcde, Jnk_as$Jsc, lty=1, lwd=3, col="red")
+#lines(xabcde, Jnk_as$Jlc, lty=1, lwd=3)
+abline(v=16, lwd=1, lty=2)
+abline(v=72, lwd=2, lty=1)
+polygon(c(xabcde,rev(xabcde)), c(y.high_p, rev(y.low_p)), border=NA, col=rgb(0.41,0.41,0.41,0.5) )
+dev.off()
+
+
